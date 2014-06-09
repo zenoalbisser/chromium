@@ -18,8 +18,10 @@ void GoogleApiKeysInfoBarDelegate::Create(InfoBarService* infobar_service) {
   if (google_apis::HasKeysConfigured())
     return;
 
+#if 0
   infobar_service->AddInfoBar(infobar_service->CreateConfirmInfoBar(
       scoped_ptr<ConfirmInfoBarDelegate>(new GoogleApiKeysInfoBarDelegate())));
+#endif
 }
 
 GoogleApiKeysInfoBarDelegate::GoogleApiKeysInfoBarDelegate()
