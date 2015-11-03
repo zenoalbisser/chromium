@@ -47,7 +47,10 @@ bool JPEG1xEncodedDataFromImage(const Image& image, int quality,
 }
 #endif  // !defined(OS_IOS)
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic warning "-Wstrict-overflow"
 bool VisibleMargins(const ImageSkia& image, int* leading, int* trailing) {
+#pragma GCC diagnostic pop
   *leading = 0;
   *trailing = std::max(1, image.width()) - 1;
   if (!image.HasRepresentation(1.0))
