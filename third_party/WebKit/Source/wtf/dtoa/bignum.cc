@@ -102,7 +102,10 @@ namespace double_conversion {
     }
 
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic warning "-Wstrict-overflow"
     void Bignum::AssignDecimalString(Vector<const char> value) {
+#pragma GCC diagnostic pop
         // 2^64 = 18446744073709551616 > 10^19
         const int kMaxUint64DecimalDigits = 19;
         Zero();
@@ -696,7 +699,10 @@ namespace double_conversion {
     }
 
 
+#pragma GCC diagnostic push
+#pragma GCC diagnostic warning "-Wstrict-overflow"
     void Bignum::Align(const Bignum& other) {
+#pragma GCC diagnostic pop
         if (exponent_ > other.exponent_) {
             // If "X" represents a "hidden" digit (by the exponent) then we are in the
             // following case (a == this, b == other):
@@ -709,7 +715,10 @@ namespace double_conversion {
             for (int i = used_digits_ - 1; i >= 0; --i) {
                 bigits_[i + zero_digits] = bigits_[i];
             }
+#pragma GCC diagnostic push
+#pragma GCC diagnostic warning "-Wstrict-overflow"
             for (int i = 0; i < zero_digits; ++i) {
+#pragma GCC diagnostic pop
                 bigits_[i] = 0;
             }
             used_digits_ += zero_digits;
