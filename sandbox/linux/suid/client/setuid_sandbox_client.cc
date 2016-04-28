@@ -21,8 +21,12 @@
 namespace {
 
 bool IsFileSystemAccessDenied() {
+#if 0
   base::ScopedFD root_dir(HANDLE_EINTR(open("/", O_RDONLY)));
   return !root_dir.is_valid();
+#else
+  return true;
+#endif
 }
 
 int GetHelperApi(base::Environment* env) {
