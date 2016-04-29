@@ -79,7 +79,7 @@ bool ots_name_parse(Font *font, const uint8_t* data, size_t length) {
   const char* string_base = reinterpret_cast<const char*>(data) +
       string_offset;
 
-  NameRecord prev_record;
+  NameRecord prev_record(0, 0, 0, 0);
   bool sort_required = false;
 
   // Read all the names, discarding any with invalid IDs,
