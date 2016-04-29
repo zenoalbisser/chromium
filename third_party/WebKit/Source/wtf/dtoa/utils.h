@@ -165,7 +165,14 @@ namespace double_conversion {
 
         // Access individual vector elements - checks bounds in debug mode.
         T& operator[](int index) const {
+#if !defined(NDEBUG)
+#pragma GCC diagnostic push
+#pragma GCC diagnostic ignored "-Wstrict-overflow"
+#endif // !defined(NDEBUG)
             ASSERT(0 <= index && index < length_);
+#if !defined(NDEBUG)
+#pragma GCC diagnostic pop
+#endif // !defined(NDEBUG)
             return start_[index];
         }
 
