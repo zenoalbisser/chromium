@@ -3543,6 +3543,9 @@
           ],
         }],
         ['OS=="linux" and chromeos!=1', {
+          'dependencies': [
+            '../build/linux/system.gyp:glib',
+          ],
           'sources': [ '<@(chrome_browser_libsecret_sources)' ],
           'defines': [
             'USE_LIBSECRET',
