@@ -31,6 +31,7 @@ UniqueIdentifier UniqueIdentifier::FromString(const std::string& s,
     memcpy(rv.data_, &bytes[0], sizeof(rv.data_));
     *success = true;
   } else {
+    memset(rv.data_, 0, sizeof(rv.data_));
     *success = false;
   }
   return rv;
