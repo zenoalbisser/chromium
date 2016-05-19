@@ -142,6 +142,7 @@
         'codec/png_codec.h',
         'color_analysis.cc',
         'color_analysis.h',
+        'color_palette.cc',
         'color_palette.h',
         'color_profile.cc',
         'color_profile.h',
