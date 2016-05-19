@@ -100,10 +100,14 @@ bool CloseMultipleNowOrOnExecUsingFDDir(int fd, int preserve_fd) {
     return false;
   }
 
-  dirent entry;
   dirent* result;
   int rv;
-  while ((rv = readdir_r(dir, &entry, &result)) == 0 && result != nullptr) {
+  while (true) {
+    errno = 0;
+    result = readdir(dir);
+    if (errno != 0 || result == nullptr)
+      break;
+
     const char* entry_name = &(*result->d_name);
     if (strcmp(entry_name, ".") == 0 || strcmp(entry_name, "..") == 0) {
       continue;

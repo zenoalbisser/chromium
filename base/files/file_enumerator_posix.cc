@@ -7,6 +7,7 @@
 #include <dirent.h>
 #include <errno.h>
 #include <fnmatch.h>
+#include <string.h>
 
 #include "base/logging.h"
 #include "base/threading/thread_restrictions.h"
@@ -129,9 +130,17 @@ bool FileEnumerator::ReadDirectory(std::vector<FileInfo>* entries,
          additional space for pathname may be needed
 #endif
 
-  struct dirent dent_buf;
-  struct dirent* dent;
-  while (readdir_r(dir, &dent_buf, &dent) == 0 && dent) {
+  while (true) {
+    struct dirent* dent;
+    errno = 0;
+    dent = readdir(dir);
+    if (errno != 0) {
+      DPLOG(ERROR) << "Couldn't read directory entry: " << strerror(errno);
+      break;
+    }
+    if (dent == NULL)
+      break;
+
     FileInfo info;
     info.filename_ = FilePath(dent->d_name);
 
