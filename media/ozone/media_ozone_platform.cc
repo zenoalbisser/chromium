@@ -56,6 +56,10 @@ MediaOzonePlatform* CreateMediaOzonePlatformTest() {
   return new MediaOzonePlatformStub;
 }
 
+MediaOzonePlatform* CreateMediaOzonePlatformEgl() {
+  return new MediaOzonePlatformStub;
+}
+
 MediaOzonePlatform::MediaOzonePlatform() {
   CHECK(!instance_) << "There should only be a single MediaOzonePlatform.";
   instance_ = this;

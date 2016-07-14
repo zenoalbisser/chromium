@@ -245,5 +245,10 @@
         'platform/test/test.gypi',
       ],
     }],
+    ['<(ozone_platform_egl) == 1', {
+      'includes': [
+        'platform/egl/egl.gypi',
+      ],
+    }],
   ],
 }
