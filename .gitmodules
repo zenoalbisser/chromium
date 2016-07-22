@@ -1,0 +1,3 @@
+[submodule "ui/ozone/platform/egl"]
+	path = ui/ozone/platform/egl
+	url = https://github.com/zenoalbisser/ozone-egl.git
