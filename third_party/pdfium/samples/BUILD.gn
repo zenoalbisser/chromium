@@ -1,0 +1,97 @@
+# Copyright 2014 PDFium Authors. All rights reserved.
+# Use of this source code is governed by a BSD-style license that can be
+# found in the LICENSE file.
+
+import("../pdfium.gni")
+
+group("samples") {
+  testonly = true
+  deps = [
+    ":pdfium_test",
+    ":pdfium_diff",
+  ]
+}
+
+config("pdfium_samples_config") {
+  defines = [
+    "PNG_PREFIX",
+    "PNGPREFIX_H",
+    "PNG_USE_READ_MACROS",
+  ]
+  if (pdf_enable_v8) {
+    defines += [
+      "PDF_ENABLE_V8",
+    ]
+  }
+}
+
+executable("pdfium_test") {
+  testonly = true
+  sources = [
+    "image_diff_png.cc",
+    "pdfium_test.cc",
+  ]
+  deps = [
+    "//third_party/pdfium:pdfium",
+    "//third_party/pdfium:test_support",
+    # Regardless of whether the library ships against system freetype,
+    # always link this binary against the bundled one for consistency
+    # of results across platforms.
+    "//third_party/pdfium/third_party:fx_freetype",
+    ":fx_lpng",
+  ]
+  if (pdf_enable_v8) {
+    deps += [
+      "//v8:v8_libplatform",
+    ]
+    include_dirs = [
+      "//v8",
+      "//v8/include",
+    ]
+  }
+  configs += [ ":pdfium_samples_config" ]
+}
+
+executable("pdfium_diff") {
+  testonly = true
+  sources = [
+    "image_diff.cc",
+    "image_diff_png.cc",
+    "image_diff_png.h",
+  ]
+  deps = [
+    "//third_party/pdfium",
+    ":fx_lpng",
+  ]
+  configs -= [ "//build/config/compiler:chromium_code" ]
+  configs += [
+    ":pdfium_samples_config",
+    "//build/config/compiler:no_chromium_code",
+  ]
+}
+
+static_library("fx_lpng") {
+  testonly = true
+  sources = [
+    "fx_lpng/include/fx_png.h",
+    "fx_lpng/src/fx_png.c",
+    "fx_lpng/src/fx_pngerror.c",
+    "fx_lpng/src/fx_pngget.c",
+    "fx_lpng/src/fx_pngmem.c",
+    "fx_lpng/src/fx_pngpread.c",
+    "fx_lpng/src/fx_pngread.c",
+    "fx_lpng/src/fx_pngrio.c",
+    "fx_lpng/src/fx_pngrtran.c",
+    "fx_lpng/src/fx_pngrutil.c",
+    "fx_lpng/src/fx_pngset.c",
+    "fx_lpng/src/fx_pngtrans.c",
+    "fx_lpng/src/fx_pngwio.c",
+    "fx_lpng/src/fx_pngwrite.c",
+    "fx_lpng/src/fx_pngwtran.c",
+    "fx_lpng/src/fx_pngwutil.c",
+  ]
+  include_dirs = [
+    "../core/src/fxcodec/fx_zlib/include/",
+  ]
+  configs += [ ":pdfium_samples_config" ]
+}
