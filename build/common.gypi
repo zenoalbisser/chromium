@@ -5995,6 +5995,7 @@
       'target_defaults': {
         'cflags': [
           '-Wno-unused-local-typedefs',
+          '-Wno-unused-variable',
         ],
       },
     }],

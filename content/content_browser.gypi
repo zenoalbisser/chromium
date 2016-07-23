@@ -1969,6 +1969,7 @@
         'clang_warning_flags': [
           # glib uses the pre-c++11 typedef-as-static_assert hack.
           '-Wno-unused-local-typedefs',
+          '-Wno-unused-variable',
         ],
       },
       'sources': [
